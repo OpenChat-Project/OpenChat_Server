@@ -14,6 +14,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 public class ChatWebSocketHandler extends TextWebSocketHandler{
 	private final Set<WebSocketSession> sessions = ConcurrentHashMap.newKeySet();
 	
+	private static String example = "";
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) {
@@ -23,11 +24,11 @@ public class ChatWebSocketHandler extends TextWebSocketHandler{
 	
 	@Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        System.out.println("Received: " + message.getPayload());
-        
+		example += message.getPayload() + "\n";
+		TextMessage textMsg = new TextMessage(example);
         for (WebSocketSession s : sessions) {
             if (s.isOpen()) {
-                s.sendMessage(message);
+                s.sendMessage(textMsg);
             }
         }
     }

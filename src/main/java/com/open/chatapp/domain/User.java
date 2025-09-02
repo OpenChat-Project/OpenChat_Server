@@ -49,4 +49,7 @@ public class User {
 	
 	@OneToMany(mappedBy = "user")
 	private List<UserDepartment> user_dept;
+	
+	@OneToMany(mappedBy = "user_id")
+	private List<Attendance> attendance;
 }
